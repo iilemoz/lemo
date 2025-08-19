@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lemo's Profile</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(ellipse at bottom, #0d1a2d 0%, #000000 100%);
+      color: #f5f5f5;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    /* Star background effect */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url('https://www.transparenttextures.com/patterns/stardust.png');
+      opacity: 0.35;
+      animation: stars 60s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes stars {
+      from { background-position: 0 0; }
+      to   { background-position: 10000px 10000px; }
+    }
+
+    .profile-container {
+      max-width: 800px;
+      margin: 70px auto;
+      padding: 40px;
+      background: rgba(20, 20, 40, 0.88);
+      border-radius: 25px;
+      box-shadow: 0 0 35px rgba(108, 99, 255, 0.6);
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-container:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 60px rgba(0, 212, 255, 0.7);
+    }
+
+    .profile-pic {
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      border: 4px solid #6c63ff;
+      margin-bottom: 20px;
+      object-fit: cover;
+      box-shadow: 0 0 25px rgba(108, 99, 255, 0.9);
+      transition: transform 0.4s ease;
+    }
+
+    .profile-pic:hover {
+      transform: scale(1.08) rotate(3deg);
+    }
+
+    /* Typewriter effect */
+    .typewriter {
+      font-size: 1.3rem;
+      color: #00d4ff;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid #00d4ff;
+      width: 0;
+      margin: 0 auto 25px auto;
+      animation: typing 4s steps(40, end) forwards, blink 0.8s infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 80% }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent }
+    }
+
+    h1 {
+      font-size: 3rem;
+      background: linear-gradient(90deg, #6c63ff, #00d4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      color: #bbb;
+      margin-bottom: 30px;
+    }
+
+    .divider {
+      height: 2px;
+      width: 60%;
+      margin: 25px auto;
+      background: linear-gradient(90deg, transparent, #6c63ff, #00d4ff, transparent);
+      border-radius: 2px;
+    }
+
+    .section {
+      margin: 25px 0;
+      padding: 25px;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: inset 0 0 18px rgba(255, 255, 255, 0.05);
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .section:hover {
+      transform: translateY(-6px);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .section h3 {
+      font-size: 1.6rem;
+      color: #00d4ff;
+      margin-bottom: 15px;
+    }
+
+    .section i {
+      color: #6c63ff;
+      margin-right: 8px;
+    }
+
+    .social-links a {
+      text-decoration: none;
+      color: #6c63ff;
+      margin: 0 15px;
+      font-size: 1.8rem;
+      display: inline-block;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      transform: scale(1.25);
+      color: #00d4ff;
+      text-shadow: 0 0 18px #00d4ff;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 1rem;
+      color: #aaa;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 6px #6c63ff; }
+      to   { text-shadow: 0 0 18px #00d4ff; }
+    }
+
+    /* Floating icons */
+    .floating-icons i {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.2;
+      animation: float 10s infinite linear;
+    }
+
+    .floating-icons i:nth-child(1) { top: 20%; left: 10%; animation-duration: 12s; }
+    .floating-icons i:nth-child(2) { top: 40%; left: 90%; animation-duration: 15s; }
+    .floating-icons i:nth-child(3) { top: 80%; left: 20%; animation-duration: 20s; }
+    .floating-icons i:nth-child(4) { top: 70%; left: 75%; animation-duration: 18s; }
+    .floating-icons i:nth-child(5) { top: 10%; left: 60%; animation-duration: 25s; }
+
+    @keyframes float {
+      from { transform: translateY(0) rotate(0deg); }
+      to { transform: translateY(-60px) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-container">
+    <!-- Floating background icons -->
+    <div class="floating-icons">
+      <i class="fa-solid fa-star"></i>
+      <i class="fa-solid fa-moon"></i>
+      <i class="fa-solid fa-meteor"></i>
+      <i class="fa-solid fa-satellite"></i>
+      <i class="fa-solid fa-rocket"></i>
+    </div>
+
+    <img src="https://img.alfrsantv.com/img/f17546454730791.jpg" alt="Lemo" class="profile-pic">
+    <h1>Lemo</h1>
+    <h2>ID: 1466124961</h2>
+    <p class="typewriter">Welcome to my cosmic space 🌌 — let’s connect!</p>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <h3><i class="fa-solid fa-user"></i> About Me</h3>
+      <p>Hey, I’m <b>Lemo</b> 👋<br>
+      ✨ Friendly, positive & always up for a good chat 💬<br>
+      🎶 Love music, 🎮 gaming, and meeting new people 🌐<br>
+      🌟 Motto: <i>"Live simply, dream big, and enjoy every moment."</i></p>
+    </div>
+
+    <div class="section">
+      <h3><i class="fa-solid fa-gem"></i> Interests</h3>
+      <p>🎧 Music | 🎮 Games | 📸 Photography | ✈️ Traveling</p>
+    </div>
+
+    <div class="section">
+      <h3><i class="fa-solid fa-envelope"></i> Contact</h3>
+      <div class="social-links">
+        <a href="https://www.facebook.com/ahmed.s6yed" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://xat.me/Lemo" target="_blank"><i class="fa-solid fa-comment-dots"></i></a>
+      </div>
+    </div>
+
+    <div class="footer">
+      ✨ Thanks for visiting my profile — let’s make some memories together! ✨
+    </div>
+  </div>
+</body>
+</html>
