@@ -960,6 +960,317 @@
       animation: glow 2s infinite alternate;
     }
 
+    /* Comments Section Styles */
+    .comments-section {
+      background: linear-gradient(135deg, rgba(255, 140, 0, 0.1), rgba(255, 69, 0, 0.1));
+      border: 1px solid rgba(255, 140, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .comments-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="comments" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,140,0,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,69,0,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,140,0,0.2)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,69,0,0.2)"/></pattern></defs><rect width="100" height="100" fill="url(%23comments)"/></svg>');
+      opacity: 0.3;
+      animation: float 20s infinite linear;
+    }
+
+    .comments-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .comments-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+      gap: 15px;
+    }
+
+    .comments-icon {
+      font-size: 2.5rem;
+      color: #ff8c00;
+      animation: commentBounce 2s infinite;
+    }
+
+    @keyframes commentBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .comments-title {
+      font-size: 2rem;
+      font-weight: 600;
+      background: linear-gradient(45deg, #ff8c00, #ff4500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+    }
+
+    .comments-description {
+      font-size: 1.1rem;
+      color: #f5f5f5;
+      margin-bottom: 30px;
+      font-style: italic;
+      text-align: center;
+    }
+
+    .comment-form {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 30px;
+      border: 2px solid rgba(255, 140, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .comment-form:hover {
+      border-color: rgba(255, 140, 0, 0.6);
+      box-shadow: 0 0 25px rgba(255, 140, 0, 0.2);
+    }
+
+    .form-row {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      flex: 1;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 1rem;
+      color: #f5f5f5;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid rgba(255, 140, 0, 0.3);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #f5f5f5;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #ff8c00;
+      box-shadow: 0 0 15px rgba(255, 140, 0, 0.3);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    .submit-comment-btn {
+      background: linear-gradient(45deg, #ff8c00, #ff4500);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .submit-comment-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 140, 0, 0.4);
+      background: linear-gradient(45deg, #ff4500, #ff8c00);
+    }
+
+    .submit-comment-btn:active {
+      transform: translateY(0);
+    }
+
+    .comments-list {
+      max-height: 500px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+
+    .comments-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .comments-list::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+    }
+
+    .comments-list::-webkit-scrollbar-thumb {
+      background: linear-gradient(45deg, #ff8c00, #ff4500);
+      border-radius: 3px;
+    }
+
+    .comment-item {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-left: 4px solid #ff8c00;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .comment-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 140, 0, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .comment-item:hover::before {
+      left: 100%;
+    }
+
+    .comment-item:hover {
+      transform: translateX(10px);
+      background: rgba(255, 255, 255, 0.15);
+      border-left-color: #ff4500;
+    }
+
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .comment-author {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #ff8c00;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .comment-author::before {
+      content: '💬';
+      font-size: 1rem;
+    }
+
+    .comment-date {
+      font-size: 0.85rem;
+      color: #888;
+      font-style: italic;
+    }
+
+    .comment-text {
+      font-size: 1rem;
+      color: #f5f5f5;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .no-comments {
+      text-align: center;
+      color: #888;
+      font-style: italic;
+      padding: 40px 20px;
+    }
+
+    .success-comment {
+      background: rgba(0, 255, 127, 0.2);
+      border: 1px solid rgba(0, 255, 127, 0.5);
+      color: #00ff7f;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+      animation: fadeInUp 0.5s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .comment-stats {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ff8c00;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #bbb;
+    }
+
+    /* Responsive design for comments */
+    @media (max-width: 768px) {
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+      
+      .comment-form {
+        padding: 20px;
+      }
+      
+      .comment-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+      }
+      
+      .comments-list {
+        max-height: 400px;
+      }
+      
+      .comment-stats {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+
     @keyframes glow {
       from { text-shadow: 0 0 6px #6c63ff; }
       to   { text-shadow: 0 0 18px #00d4ff; }
@@ -1223,9 +1534,228 @@
       </div>
     </div>
 
+    <div class="section comments-section">
+      <div class="comments-content">
+        <div class="comments-header">
+          <i class="fa-solid fa-comments comments-icon"></i>
+          <h3 class="comments-title">Comments</h3>
+        </div>
+        <div class="comments-description">
+          Share your thoughts and join the conversation! 💭✨
+        </div>
+
+        <div class="comment-stats">
+          <div class="stat-item">
+            <span class="stat-number" id="totalComments">0</span>
+            <span class="stat-label">Total Comments</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" id="uniqueCommenters">0</span>
+            <span class="stat-label">Unique Commenters</span>
+          </div>
+        </div>
+        
+        <div class="comment-form">
+          <form id="commentForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="commentName" class="form-label">Your Name</label>
+                <input type="text" id="commentName" class="form-input" placeholder="Enter your name" required>
+              </div>
+              <div class="form-group">
+                <label for="commentEmail" class="form-label">Email (optional)</label>
+                <input type="email" id="commentEmail" class="form-input" placeholder="your@email.com">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="commentText" class="form-label">Your Comment</label>
+              <textarea id="commentText" class="form-input form-textarea" placeholder="Share your thoughts, ask questions, or just say hello!" required></textarea>
+            </div>
+            <button type="submit" class="submit-comment-btn">
+              <i class="fa-solid fa-paper-plane"></i>
+              Post Comment
+            </button>
+          </form>
+        </div>
+
+        <div id="successComment" class="success-comment" style="display: none;">
+          ✨ Thank you for your comment! It has been posted successfully. ✨
+        </div>
+
+        <div class="comments-list" id="commentsList">
+          <div class="no-comments">No comments yet. Be the first to start the conversation! 🌟</div>
+        </div>
+      </div>
+    </div>
+
     <div class="footer">
       ✨ Thanks for visiting my profile — let's make some memories together! ✨
     </div>
   </div>
+
+  <script>
+    // Comments System Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const commentForm = document.getElementById('commentForm');
+      const commentsList = document.getElementById('commentsList');
+      const successComment = document.getElementById('successComment');
+      const totalComments = document.getElementById('totalComments');
+      const uniqueCommenters = document.getElementById('uniqueCommenters');
+      
+      // Load existing comments from localStorage
+      function loadComments() {
+        const comments = JSON.parse(localStorage.getItem('profileComments') || '[]');
+        
+        if (comments.length === 0) {
+          commentsList.innerHTML = '<div class="no-comments">No comments yet. Be the first to start the conversation! 🌟</div>';
+          updateStats(comments);
+          return;
+        }
+        
+        // Sort comments by date (newest first)
+        comments.sort((a, b) => new Date(b.date) - new Date(a.date));
+        
+        commentsList.innerHTML = comments.map(comment => `
+          <div class="comment-item">
+            <div class="comment-header">
+              <div class="comment-author">${escapeHtml(comment.name)}</div>
+              <div class="comment-date">${formatDate(comment.date)}</div>
+            </div>
+            <p class="comment-text">${escapeHtml(comment.text)}</p>
+          </div>
+        `).join('');
+        
+        updateStats(comments);
+      }
+      
+      // Update comment statistics
+      function updateStats(comments) {
+        totalComments.textContent = comments.length;
+        
+        // Count unique commenters
+        const uniqueNames = [...new Set(comments.map(comment => comment.name.toLowerCase()))];
+        uniqueCommenters.textContent = uniqueNames.length;
+      }
+      
+      // Escape HTML to prevent XSS
+      function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+      
+      // Format date for display
+      function formatDate(dateString) {
+        const date = new Date(dateString);
+        const now = new Date();
+        const diffTime = Math.abs(now - date);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (diffDays === 1) {
+          return 'Today at ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        } else if (diffDays === 2) {
+          return 'Yesterday at ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        } else if (diffDays <= 7) {
+          return diffDays - 1 + ' days ago';
+        } else {
+          return date.toLocaleDateString() + ' at ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+      }
+      
+      // Handle form submission
+      commentForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const nameInput = document.getElementById('commentName');
+        const emailInput = document.getElementById('commentEmail');
+        const textInput = document.getElementById('commentText');
+        
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const text = textInput.value.trim();
+        
+        if (!name || !text) {
+          alert('Please fill in both name and comment fields.');
+          return;
+        }
+        
+        // Create new comment object
+        const newComment = {
+          name: name,
+          email: email,
+          text: text,
+          date: new Date().toISOString()
+        };
+        
+        // Get existing comments
+        const comments = JSON.parse(localStorage.getItem('profileComments') || '[]');
+        
+        // Add new comment
+        comments.push(newComment);
+        
+        // Save to localStorage
+        localStorage.setItem('profileComments', JSON.stringify(comments));
+        
+        // Clear form
+        nameInput.value = '';
+        emailInput.value = '';
+        textInput.value = '';
+        
+        // Show success message
+        successComment.style.display = 'block';
+        setTimeout(() => {
+          successComment.style.display = 'none';
+        }, 3000);
+        
+        // Reload comments
+        loadComments();
+        
+        // Add animation to new comment
+        const commentItems = document.querySelectorAll('.comment-item');
+        if (commentItems.length > 0) {
+          const newCommentItem = commentItems[0];
+          newCommentItem.style.opacity = '0';
+          newCommentItem.style.transform = 'translateX(-50px)';
+          
+          setTimeout(() => {
+            newCommentItem.style.transition = 'all 0.5s ease';
+            newCommentItem.style.opacity = '1';
+            newCommentItem.style.transform = 'translateX(0)';
+          }, 100);
+        }
+      });
+      
+      // Load comments on page load
+      loadComments();
+      
+      // Add some sample comments if no comments exist
+      const existingComments = JSON.parse(localStorage.getItem('profileComments') || '[]');
+      if (existingComments.length === 0) {
+        const sampleComments = [
+          {
+            name: "Space Explorer",
+            email: "",
+            text: "Amazing profile! The space theme is absolutely stunning. Love the animations and your positive energy! ✨",
+            date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
+          },
+          {
+            name: "Cosmic Friend",
+            email: "",
+            text: "Your profile is out of this world! The design is incredible and you seem like such a friendly person. Keep shining! 🌟",
+            date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
+          },
+          {
+            name: "Stellar Visitor",
+            email: "",
+            text: "Just wanted to say hi! Your profile caught my attention with all the beautiful space effects. Great work! 🚀",
+            date: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString()
+          }
+        ];
+        
+        localStorage.setItem('profileComments', JSON.stringify(sampleComments));
+        loadComments();
+      }
+    });
+  </script>
 </body>
 </html>
