@@ -2007,29 +2007,22 @@
     </div>
   </div>
 
+  <!-- Configuration -->
+  <script src="config.js"></script>
+  
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
   
   <script>
-    // Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyA8FxTP0_ue_tnE2hF9kJzHdlC575ePo-I",
-      authDomain: "lemo-profile-stories.firebaseapp.com",
-      projectId: "lemo-profile-stories",
-      storageBucket: "lemo-profile-stories.firebasestorage.app",
-      messagingSenderId: "1039102929805",
-      appId: "1:1039102929805:web:2d45c7febaecab3e37abc4"
-    };
-
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+    // Initialize Firebase using config
+    firebase.initializeApp(config.firebase);
     const db = firebase.firestore();
     
-         // Story functionality
-     let stories = [];
-     let isAdmin = false;
-     let adminPassword = 'lemo265339'; // Change this to your desired password
+    // Story functionality
+    let stories = [];
+    let isAdmin = false;
+    let adminPassword = config.admin.password;
     
     // Video platform detection and embedding
     function detectVideoPlatform(url) {
