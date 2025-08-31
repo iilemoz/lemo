@@ -1551,6 +1551,21 @@
       .story-modal-content video {
         max-width: 100%;
         height: auto;
+        max-height: 50vh;
+      }
+      
+      /* Better video container sizing for mobile */
+      .story-modal-content iframe {
+        max-height: 50vh;
+      }
+      
+      /* Adjust padding for portrait videos on mobile */
+      .story-modal-content div[style*="padding-bottom: 177.78%"] {
+        padding-bottom: 177.78% !important;
+      }
+      
+      .story-modal-content div[style*="padding-bottom: 125%"] {
+        padding-bottom: 125% !important;
       }
     }
 
@@ -1990,9 +2005,9 @@
            </div>
            <div style="margin-top: 10px;">
              <label class="story-form-label" style="font-size: 0.9rem;">Or use Video URL:</label>
-             <input type="url" class="story-form-input" id="storyVideo" placeholder="https://www.youtube.com/watch?v=... or direct video URL">
-             <small style="color: #aaa; font-size: 0.9rem; margin-top: 5px;">
-               <i class="fa-solid fa-info-circle"></i> Supports YouTube, Facebook, Instagram, TikTok, and direct video URLs
+                             <input type="url" class="story-form-input" id="storyVideo" placeholder="https://www.youtube.com/watch?v=... or https://youtube.com/shorts/... or direct video URL">
+                            <small style="color: #aaa; font-size: 0.9rem; margin-top: 5px;">
+                 <i class="fa-solid fa-info-circle"></i> Supports YouTube, YouTube Shorts, Facebook, Instagram, TikTok, and direct video URLs
              </small>
            </div>
          </div>
@@ -2030,14 +2045,17 @@
       
       const urlLower = url.toLowerCase();
       
-      // YouTube
-      if (urlLower.includes('youtube.com/watch') || urlLower.includes('youtu.be/')) {
+      // YouTube (including Shorts)
+      if (urlLower.includes('youtube.com/watch') || urlLower.includes('youtu.be/') || urlLower.includes('youtube.com/shorts/')) {
         const videoId = extractYouTubeId(url);
+        const isShorts = urlLower.includes('/shorts/');
         return {
           platform: 'youtube',
           videoId: videoId,
           embedUrl: `https://www.youtube.com/embed/${videoId}`,
-          thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+          thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+          isShorts: isShorts,
+          aspectRatio: isShorts ? 'portrait' : 'landscape'
         };
       }
       
@@ -2046,7 +2064,8 @@
         return {
           platform: 'facebook',
           embedUrl: url.replace('www.facebook.com', 'www.facebook.com/plugins/video.php'),
-          originalUrl: url
+          originalUrl: url,
+          aspectRatio: 'landscape' // Facebook videos are typically landscape
         };
       }
       
@@ -2055,7 +2074,8 @@
         return {
           platform: 'instagram',
           embedUrl: url + 'embed/',
-          originalUrl: url
+          originalUrl: url,
+          aspectRatio: 'portrait' // Instagram posts are typically portrait/square
         };
       }
       
@@ -2064,7 +2084,8 @@
         return {
           platform: 'tiktok',
           embedUrl: url,
-          originalUrl: url
+          originalUrl: url,
+          aspectRatio: 'portrait' // TikTok videos are typically portrait
         };
       }
       
@@ -2072,7 +2093,8 @@
       if (urlLower.match(/\.(mp4|webm|ogg|mov|avi|mkv)$/)) {
         return {
           platform: 'direct',
-          videoUrl: url
+          videoUrl: url,
+          aspectRatio: 'auto' // Will be determined by the video's natural aspect ratio
         };
       }
       
@@ -2080,6 +2102,13 @@
     }
     
     function extractYouTubeId(url) {
+      // Handle YouTube Shorts URLs
+      if (url.includes('/shorts/')) {
+        const shortsMatch = url.match(/\/shorts\/([^/?&#]+)/);
+        return shortsMatch ? shortsMatch[1] : null;
+      }
+      
+      // Handle regular YouTube URLs
       const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
       const match = url.match(regExp);
       return (match && match[2].length === 11) ? match[2] : null;
@@ -2309,6 +2338,15 @@
     async function addStory(title, content, imageUrl = null, videoUrl = null) {
       const videoInfo = detectVideoPlatform(videoUrl);
       
+      // For direct video files, try to detect aspect ratio
+      if (videoInfo && videoInfo.platform === 'direct') {
+        try {
+          await detectVideoAspectRatio(videoUrl, videoInfo);
+        } catch (error) {
+          console.log('Could not detect video aspect ratio:', error);
+        }
+      }
+      
       const story = {
         title: title,
         content: content,
@@ -2331,6 +2369,37 @@
         console.error('Error adding story:', error);
         showNotification('Error adding story. Please try again! ❌');
       }
+    }
+    
+    // Function to detect video aspect ratio for direct video files
+    function detectVideoAspectRatio(videoUrl, videoInfo) {
+      return new Promise((resolve, reject) => {
+        const video = document.createElement('video');
+        video.style.display = 'none';
+        video.preload = 'metadata';
+        
+        video.onloadedmetadata = function() {
+          const aspectRatio = video.videoWidth / video.videoHeight;
+          if (aspectRatio > 1) {
+            videoInfo.aspectRatio = 'landscape';
+          } else if (aspectRatio < 1) {
+            videoInfo.aspectRatio = 'portrait';
+          } else {
+            videoInfo.aspectRatio = 'square';
+          }
+          videoInfo.naturalAspectRatio = aspectRatio;
+          document.body.removeChild(video);
+          resolve(videoInfo);
+        };
+        
+        video.onerror = function() {
+          document.body.removeChild(video);
+          reject(new Error('Could not load video metadata'));
+        };
+        
+        video.src = videoUrl;
+        document.body.appendChild(video);
+      });
     }
     
          function renderStories() {
@@ -2439,55 +2508,65 @@
             ${story.videoUrl ? `
               <div style="margin-bottom: 20px; position: relative;">
                 ${story.videoInfo && story.videoInfo.platform === 'youtube' ? `
-                  <iframe 
-                    src="${story.videoInfo.embedUrl}?autoplay=0&rel=0" 
-                    style="width: 100%; height: 315px; border-radius: 15px; border: none;" 
-                    allowfullscreen>
-                  </iframe>
-                  <div style="position: absolute; top: 10px; right: 10px; background: rgba(255, 0, 0, 0.9); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold;">
-                    <i class="fa-brands fa-youtube"></i> YOUTUBE
+                  <div style="position: relative; width: 100%; padding-bottom: ${story.videoInfo.aspectRatio === 'portrait' ? '177.78%' : '56.25%'}; border-radius: 15px; overflow: hidden;">
+                    <iframe 
+                      src="${story.videoInfo.embedUrl}?autoplay=0&rel=0" 
+                      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
+                      allowfullscreen>
+                    </iframe>
+                    <div style="position: absolute; top: 10px; right: 10px; background: rgba(255, 0, 0, 0.9); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; z-index: 10;">
+                      <i class="fa-brands fa-youtube"></i> ${story.videoInfo.isShorts ? 'YOUTUBE SHORTS' : 'YOUTUBE'}
+                    </div>
                   </div>
                 ` : story.videoInfo && story.videoInfo.platform === 'facebook' ? `
-                  <iframe 
-                    src="${story.videoInfo.embedUrl}" 
-                    style="width: 100%; height: 315px; border-radius: 15px; border: none;" 
-                    scrolling="no" 
-                    frameborder="0" 
-                    allowfullscreen="true">
-                  </iframe>
-                  <div style="position: absolute; top: 10px; right: 10px; background: rgba(24, 119, 242, 0.9); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold;">
-                    <i class="fa-brands fa-facebook"></i> FACEBOOK
+                  <div style="position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 15px; overflow: hidden;">
+                    <iframe 
+                      src="${story.videoInfo.embedUrl}" 
+                      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
+                      scrolling="no" 
+                      frameborder="0" 
+                      allowfullscreen="true">
+                    </iframe>
+                    <div style="position: absolute; top: 10px; right: 10px; background: rgba(24, 119, 242, 0.9); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; z-index: 10;">
+                      <i class="fa-brands fa-facebook"></i> FACEBOOK
+                    </div>
                   </div>
                 ` : story.videoInfo && story.videoInfo.platform === 'instagram' ? `
-                  <iframe 
-                    src="${story.videoInfo.embedUrl}" 
-                    style="width: 100%; height: 500px; border-radius: 15px; border: none;" 
-                    scrolling="no" 
-                    frameborder="0">
-                  </iframe>
-                  <div style="position: absolute; top: 10px; right: 10px; background: rgba(228, 64, 95, 0.9); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold;">
-                    <i class="fa-brands fa-instagram"></i> INSTAGRAM
+                  <div style="position: relative; width: 100%; padding-bottom: 125%; border-radius: 15px; overflow: hidden;">
+                    <iframe 
+                      src="${story.videoInfo.embedUrl}" 
+                      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
+                      scrolling="no" 
+                      frameborder="0">
+                    </iframe>
+                    <div style="position: absolute; top: 10px; right: 10px; background: rgba(228, 64, 95, 0.9); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; z-index: 10;">
+                      <i class="fa-brands fa-instagram"></i> INSTAGRAM
+                    </div>
                   </div>
                 ` : story.videoInfo && story.videoInfo.platform === 'tiktok' ? `
-                  <blockquote 
-                    class="tiktok-embed" 
-                    cite="${story.videoInfo.originalUrl}" 
-                    data-video-id="${story.videoInfo.originalUrl.split('/').pop()}"
-                    style="max-width: 325px; min-width: 325px;">
-                    <section></section>
-                  </blockquote>
-                  <div style="position: absolute; top: 10px; right: 10px; background: rgba(0, 0, 0, 0.9); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold;">
-                    <i class="fa-brands fa-tiktok"></i> TIKTOK
+                  <div style="position: relative; width: 100%; padding-bottom: 177.78%; border-radius: 15px; overflow: hidden;">
+                    <blockquote 
+                      class="tiktok-embed" 
+                      cite="${story.videoInfo.originalUrl}" 
+                      data-video-id="${story.videoInfo.originalUrl.split('/').pop()}"
+                      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; max-width: none; min-width: auto;">
+                      <section></section>
+                    </blockquote>
+                    <div style="position: absolute; top: 10px; right: 10px; background: rgba(0, 0, 0, 0.9); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; z-index: 10;">
+                      <i class="fa-brands fa-tiktok"></i> TIKTOK
+                    </div>
                   </div>
                 ` : `
-                  <video controls style="max-width: 100%; border-radius: 15px; background: #000;">
-                    <source src="${story.videoUrl}" type="video/mp4">
-                    <source src="${story.videoUrl}" type="video/webm">
-                    <source src="${story.videoUrl}" type="video/ogg">
-                    Your browser does not support the video tag.
-                  </video>
-                  <div style="position: absolute; top: 10px; right: 10px; background: rgba(255, 107, 107, 0.9); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold;">
-                    <i class="fa-solid fa-video"></i> VIDEO
+                  <div style="position: relative; width: 100%; border-radius: 15px; overflow: hidden;">
+                    <video controls style="width: 100%; height: auto; max-height: 70vh; background: #000; object-fit: contain; border-radius: 15px;">
+                      <source src="${story.videoUrl}" type="video/mp4">
+                      <source src="${story.videoUrl}" type="video/webm">
+                      <source src="${story.videoUrl}" type="video/ogg">
+                      Your browser does not support the video tag.
+                    </video>
+                    <div style="position: absolute; top: 10px; right: 10px; background: rgba(255, 107, 107, 0.9); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; z-index: 10;">
+                      <i class="fa-solid fa-video"></i> ${story.videoInfo && story.videoInfo.aspectRatio === 'portrait' ? 'PORTRAIT VIDEO' : 'VIDEO'}
+                    </div>
                   </div>
                 `}
               </div>
