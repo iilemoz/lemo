@@ -6,11 +6,6 @@ const config = {
     storageBucket: "lemo-profile-stories.firebasestorage.app",
     messagingSenderId: "1039102929805",
     appId: "1:1039102929805:web:2d45c7febaecab3e37abc4"
-  },
-  
-  // Admin Configuration
-  admin: {
-    password: "lemo265339"
   }
 };
 
