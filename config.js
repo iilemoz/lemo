@@ -9,9 +9,7 @@ const config = {
   },
   
   // Admin Configuration
-  admin: {
-    password: "lemo265339"
-  }
+  admin: {}
 };
 
 // Export for use in HTML
