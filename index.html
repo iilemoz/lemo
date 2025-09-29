@@ -2445,18 +2445,65 @@
       return storyDiv;
     }
     
-    async function viewStory(story, index) {
-      // Increment view count
-      story.views++;
+    // Unique views per IP helpers
+    async function getClientIp() {
       try {
-        await db.collection('stories').doc(story.id).update({
-          views: story.views
-        });
-      } catch (error) {
-        console.error('Error updating view count:', error);
-        // If update fails, revert the view count
-        story.views--;
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        return data.ip || null;
+      } catch (e) {
+        console.warn('Failed to fetch client IP:', e);
+        return null;
       }
+    }
+
+    function hashStringSHA256(message) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(message);
+      return crypto.subtle.digest('SHA-256', data).then((hashBuffer) => {
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+      });
+    }
+
+    async function incrementUniqueViewIfNeeded(story) {
+      try {
+        const ip = await getClientIp();
+        if (!ip) return false;
+        const ipHash = await hashStringSHA256(ip);
+        const storyRef = db.collection('stories').doc(story.id);
+        const viewsRef = storyRef.collection('views');
+        const viewerDocRef = viewsRef.doc(ipHash);
+
+        return await db.runTransaction(async (tx) => {
+          const viewerDoc = await tx.get(viewerDocRef);
+          if (viewerDoc.exists) {
+            return false; // already counted for this IP
+          }
+
+          // create marker and increment views atomically
+          tx.set(viewerDocRef, {
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+
+          const storySnap = await tx.get(storyRef);
+          const currentViews = (storySnap.exists && storySnap.data().views) || 0;
+          tx.update(storyRef, { views: currentViews + 1 });
+          return true;
+        });
+      } catch (err) {
+        console.error('Unique view transaction failed:', err);
+        return false;
+      }
+    }
+
+    async function viewStory(story, index) {
+      // Increment unique view per IP
+      incrementUniqueViewIfNeeded(story).then((incremented) => {
+        if (incremented) {
+          story.views = (story.views || 0) + 1;
+        }
+      });
       
       // Create story viewer modal
       const viewerModal = document.createElement('div');
