@@ -3551,9 +3551,6 @@
                       <source src="${story.videoUrl}" type="video/ogg">
                       Your browser does not support the video tag.
                     </video>
-                    <div style="position: absolute; top: 10px; right: 10px; background: rgba(255, 107, 107, 0.9); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; z-index: 10;">
-                      <i class="fa-solid fa-video"></i> ${story.videoInfo && story.videoInfo.aspectRatio === 'portrait' ? 'PORTRAIT VIDEO' : 'VIDEO'}
-                    </div>
                   </div>
                 `}
               </div>
@@ -3575,9 +3572,9 @@
             <div style="color: #aaa; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
               <span><i class="fa-solid fa-calendar"></i> ${story.timestamp}</span>
               <span><i class="fa-solid fa-eye"></i> ${story.views} views</span>
-              ${story.videoInfo && story.videoInfo.platform ?
+              ${(story.videoInfo && story.videoInfo.platform && story.videoInfo.platform !== 'direct') ?
                 `<span><i class="fa-brands fa-${story.videoInfo.platform === 'youtube' ? 'youtube' : story.videoInfo.platform === 'facebook' ? 'facebook' : story.videoInfo.platform === 'instagram' ? 'instagram' : story.videoInfo.platform === 'tiktok' ? 'tiktok' : 'video'}"></i> ${story.videoInfo.platform.toUpperCase()} Video</span>` :
-                story.videoUrl ? '<span><i class="fa-solid fa-video"></i> Video Story</span>' : ''
+                (story.videoUrl ? '<span><i class="fa-solid fa-video"></i> Video Story</span>' : '')
               }
               ${story.imageUrl && !story.videoUrl ? '<span><i class="fa-solid fa-image"></i> Image Story</span>' : ''}
               ${!story.videoUrl && !story.imageUrl ? '<span><i class="fa-solid fa-file-text"></i> Text Story</span>' : ''}
