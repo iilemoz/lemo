@@ -1769,7 +1769,7 @@
 
     /* Tighten spacing below the Stories block */
     #storiesRoot { padding-bottom: 0; }
-    .story-section { padding-bottom: 0; padding-top: 0; }
+    .story-section { padding-bottom: 0; }
     .stories-container { padding-bottom: 0; }
 
     /* Hide horizontal scrollbar in Stories while keeping scroll functionality */
@@ -3238,7 +3238,7 @@
      }
 
     async function addStory(title, content, imageUrl = null, videoUrl = null) {
-      const videoInfo = detectVideoPlatform(videoUrl);
+      let videoInfo = detectVideoPlatform(videoUrl);
 
       // For direct video files, try to detect aspect ratio
       if (videoInfo && videoInfo.platform === 'direct') {
@@ -3249,10 +3249,24 @@
         }
       }
 
+      // If it's a video and we don't already have a platform-provided thumbnail,
+      // try to capture a frame to use as the story thumbnail
+      let generatedThumb = null;
+      if (videoUrl && !(videoInfo && videoInfo.platform === 'youtube' && videoInfo.thumbnail)) {
+        try { generatedThumb = await captureVideoThumbnail(videoUrl, 0.5); } catch(_) {}
+      }
+
+      // Final image preference: uploaded/typed imageUrl -> platform thumbnail -> generated thumbnail
+      const finalImage = imageUrl || (videoInfo && videoInfo.thumbnail) || generatedThumb || null;
+      if (generatedThumb) {
+        if (!videoInfo) videoInfo = { platform: 'direct' };
+        if (!videoInfo.thumbnail) videoInfo.thumbnail = generatedThumb;
+      }
+
       const story = {
         title: title,
         content: content,
-        imageUrl: imageUrl,
+        imageUrl: finalImage,
         videoUrl: videoUrl,
         videoInfo: videoInfo,
         timestamp: new Date().toLocaleDateString(),
@@ -3304,6 +3318,61 @@
       });
     }
 
+    // Generate a thumbnail from a video URL/DataURL by grabbing the first frame
+    function captureVideoThumbnail(videoUrl, atSeconds = 0.5) {
+      return new Promise((resolve, reject) => {
+        try {
+          const video = document.createElement('video');
+          video.style.display = 'none';
+          video.preload = 'auto';
+          video.muted = true;
+          video.playsInline = true;
+          // Helps with CORS for remote files; harmless for data URLs
+          video.crossOrigin = 'anonymous';
+          const cleanup = () => { try { document.body.removeChild(video); } catch(_) {} };
+
+          const handleSeeked = () => {
+            try {
+              const vw = video.videoWidth || 320;
+              const vh = video.videoHeight || 180;
+              const maxW = 640, maxH = 640; // cap size to keep Firestore doc small
+              const scale = Math.min(maxW / vw, maxH / vh, 1);
+              const w = Math.round(vw * scale);
+              const h = Math.round(vh * scale);
+              const canvas = document.createElement('canvas');
+              canvas.width = w; canvas.height = h;
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(video, 0, 0, w, h);
+              const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+              cleanup();
+              resolve(dataUrl);
+            } catch (err) {
+              cleanup();
+              reject(err);
+            }
+          };
+
+          video.addEventListener('loadedmetadata', () => {
+            try {
+              const t = Math.min(Math.max(atSeconds, 0.1), (isFinite(video.duration) && video.duration > 0) ? Math.max(video.duration - 0.1, 0.1) : 0.5);
+              video.currentTime = t;
+            } catch(_) {
+              // Fallback if seeking fails
+              video.addEventListener('loadeddata', handleSeeked, { once: true });
+            }
+          }, { once: true });
+          video.addEventListener('seeked', handleSeeked, { once: true });
+          video.onerror = () => { cleanup(); reject(new Error('Failed to load video for thumbnail')); };
+
+          video.src = videoUrl;
+          document.body.appendChild(video);
+        } catch (e) {
+          reject(e);
+        }
+      });
+    }
+
+
          function renderStories() {
        const container = document.getElementById('storiesContainer');
 
@@ -3322,6 +3391,28 @@
            <div class="add-text">Create story</div>
          `;
          container.appendChild(addButton);
+
+         // Admin utility: generate thumbnails for old stories
+         const upgradeButton = document.createElement('div');
+         upgradeButton.className = 'story-item add-story';
+         upgradeButton.innerHTML = `
+           <div class="add-button">
+             <i class="fa-solid fa-wand-magic-sparkles"></i>
+           </div>
+           <div class="add-text">Generate thumbnails</div>
+         `;
+         upgradeButton.onclick = async () => {
+           if (!confirm('Generate thumbnails for stories missing them?')) return;
+           try {
+             await upgradeStoryThumbnails({ limit: 100 });
+             showNotification('Thumbnail upgrade completed ✔️');
+             await loadStories();
+           } catch(e) {
+             showNotification('Upgrade failed ❌');
+             console.error(e);
+           }
+         };
+         container.appendChild(upgradeButton);
        }
 
        // Add existing stories
@@ -3349,19 +3440,13 @@
       storyDiv.className = 'story-item';
       storyDiv.onclick = () => viewStory(story, index);
 
-      // Get story image or create placeholder
-      let storyImage = story.imageUrl || 'https://img.alfrsantv.com/img/f17546454730791.jpg';
-      let previewImage = story.videoUrl ? 'https://img.alfrsantv.com/img/f17546454730791.jpg' : storyImage;
+      // Choose thumbnail: prefer stored imageUrl, otherwise a platform/generated thumbnail
+      let storyImage = (story.imageUrl) || ((story.videoInfo && story.videoInfo.thumbnail) ? story.videoInfo.thumbnail : 'https://img.alfrsantv.com/img/f17546454730791.jpg');
 
-      // Create story content based on type
-      let storyContent = '';
+      // If it's a video and a video thumbnail exists, use it
       if (story.videoUrl) {
-        if (story.videoInfo && story.videoInfo.platform === 'youtube' && story.videoInfo.thumbnail) {
+        if (story.videoInfo && story.videoInfo.thumbnail) {
           storyImage = story.videoInfo.thumbnail;
-          previewImage = story.videoInfo.thumbnail;
-        } else {
-          storyImage = 'https://img.alfrsantv.com/img/f17546454730791.jpg';
-          previewImage = 'https://img.alfrsantv.com/img/f17546454730791.jpg';
         }
       }
 
@@ -3565,6 +3650,75 @@
           onConfirm();
         });
       }
+
+    // Admin tool: generate thumbnails for old stories
+    async function upgradeStoryThumbnails({ limit = 100, force = false } = {}) {
+      showNotification('Starting thumbnail upgrade...');
+      let updated = 0, attempted = 0;
+      try {
+        const snapshot = await db.collection('stories')
+          .orderBy('createdAt', 'desc')
+          .limit(limit)
+          .get();
+
+        for (const doc of snapshot.docs) {
+          const s = doc.data();
+          const id = doc.id;
+          const hasVideo = !!s.videoUrl;
+          if (!hasVideo) continue;
+          const hasThumb = !!(s.imageUrl || (s.videoInfo && s.videoInfo.thumbnail));
+          if (hasThumb && !force) continue;
+          attempted++;
+          try {
+            // Try to generate thumbnail
+            const thumb = await captureVideoThumbnail(s.videoUrl, 0.6);
+            const updates = {};
+            if (!s.imageUrl || force) updates.imageUrl = thumb;
+            if (s.videoInfo && typeof s.videoInfo === 'object') {
+              updates['videoInfo.thumbnail'] = thumb;
+            } else {
+              updates.videoInfo = { platform: 'direct', thumbnail: thumb };
+            }
+            // For direct videos without aspect ratio, try to compute it
+            try {
+              let vInfo = s.videoInfo || updates.videoInfo;
+              if (vInfo && vInfo.platform === 'direct' && !vInfo.naturalAspectRatio) {
+                await detectVideoAspectRatio(s.videoUrl, vInfo);
+                if (!updates.videoInfo) updates['videoInfo.naturalAspectRatio'] = vInfo.naturalAspectRatio;
+              }
+            } catch (_) {}
+
+            await db.collection('stories').doc(id).update(updates);
+
+            // Update local cache
+            const idx = stories.findIndex(st => st.id === id);
+            if (idx !== -1) {
+              stories[idx].imageUrl = updates.imageUrl || stories[idx].imageUrl;
+              stories[idx].videoInfo = stories[idx].videoInfo || {};
+              if (updates.videoInfo) {
+                stories[idx].videoInfo = { ...(stories[idx].videoInfo||{}), ...updates.videoInfo };
+              }
+              if (updates['videoInfo.thumbnail']) {
+                stories[idx].videoInfo.thumbnail = updates['videoInfo.thumbnail'];
+              }
+              if (updates['videoInfo.naturalAspectRatio']) {
+                stories[idx].videoInfo.naturalAspectRatio = updates['videoInfo.naturalAspectRatio'];
+              }
+            }
+            updated++;
+          } catch (e) {
+            console.warn('Thumbnail generation failed for story', id, e);
+          }
+        }
+      } catch (e) {
+        console.error('Upgrade batch failed', e);
+        showNotification('Upgrade failed. Check console for details. ❌');
+        return;
+      }
+      showNotification(`Thumbnail upgrade done. Updated ${updated} / ${attempted} stories.`);
+      renderStories();
+    }
+
 
     // Load stories from Firebase
     async function loadStories() {
