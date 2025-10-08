@@ -24,7 +24,7 @@
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: 
+      background:
         radial-gradient(2px 2px at 20px 30px, #eee, transparent),
         radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
         radial-gradient(1px 1px at 90px 40px, #fff, transparent),
@@ -108,12 +108,11 @@
     }
 
     .profile-container {
-      max-width: 900px;
+      max-width: 650px;
       margin: 70px auto;
       padding: 40px;
-      background: rgba(20, 20, 40, 0.88);
       border-radius: 25px;
-      box-shadow: 0 0 35px rgba(108, 99, 255, 0.6);
+      box-shadow: none;
       backdrop-filter: blur(10px);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       position: relative;
@@ -121,8 +120,7 @@
     }
 
     .profile-container:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 0 60px rgba(0, 212, 255, 0.7);
+      box-shadow: none;
     }
 
     .profile-pic {
@@ -206,7 +204,7 @@
       -webkit-text-fill-color: transparent;
       background-size: 300% 300%;
       animation: modernGradient 4s ease infinite;
-      text-shadow: 
+      text-shadow:
         0 0 20px rgba(108, 99, 255, 0.8),
         0 0 40px rgba(0, 212, 255, 0.6),
         0 0 60px rgba(108, 99, 255, 0.4);
@@ -220,26 +218,26 @@
 
     .name-text:hover {
       transform: perspective(1000px) rotateX(0deg) scale(1.05);
-      text-shadow: 
+      text-shadow:
         0 0 30px rgba(108, 99, 255, 1),
         0 0 60px rgba(0, 212, 255, 0.8),
         0 0 90px rgba(108, 99, 255, 0.6);
     }
 
     @keyframes modernGradient {
-      0%, 100% { 
+      0%, 100% {
         background-position: 0% 50%;
         filter: hue-rotate(0deg);
       }
-      25% { 
+      25% {
         background-position: 100% 50%;
         filter: hue-rotate(90deg);
       }
-      50% { 
+      50% {
         background-position: 100% 100%;
         filter: hue-rotate(180deg);
       }
-      75% { 
+      75% {
         background-position: 0% 100%;
         filter: hue-rotate(270deg);
       }
@@ -407,14 +405,10 @@
       margin: 25px 0;
       padding: 25px;
       border-radius: 15px;
-      background: rgba(255, 255, 255, 0.06);
-      box-shadow: inset 0 0 18px rgba(255, 255, 255, 0.05);
       transition: transform 0.3s ease, background 0.3s ease;
     }
 
     .section:hover {
-      transform: translateY(-6px);
-      background: rgba(255, 255, 255, 0.1);
     }
 
     .section h3 {
@@ -835,7 +829,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: 
+      background:
         radial-gradient(circle at 20% 30%, rgba(255, 165, 0, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 70%, rgba(255, 69, 0, 0.1) 0%, transparent 50%);
       animation: pulse 4s ease-in-out infinite;
@@ -1030,17 +1024,17 @@
         margin: 20px;
         padding: 20px;
       }
-      
+
       .about-me-text {
         font-size: 1rem;
       }
-      
+
       .about-me-line {
         flex-direction: column;
         text-align: center;
         gap: 10px;
       }
-      
+
       .about-me-emoji {
         margin-right: 0;
         margin-bottom: 5px;
@@ -1049,11 +1043,9 @@
 
     /* Story Section Styles - Facebook Style */
     .story-section {
-      margin-bottom: 30px;
+      margin-bottom: 0;
       padding: 20px;
-      background: rgba(255, 255, 255, 0.05);
       border-radius: 20px;
-      border: 1px solid rgba(108, 99, 255, 0.2);
       position: relative;
       overflow: hidden;
     }
@@ -1065,7 +1057,6 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(135deg, rgba(108, 99, 255, 0.1), rgba(0, 212, 255, 0.1));
       border-radius: 20px;
       opacity: 0.5;
     }
@@ -1083,7 +1074,7 @@
        gap: 15px;
        position: relative;
      }
-     
+
      .admin-gear {
        position: absolute;
        right: 0;
@@ -1102,22 +1093,22 @@
        color: white;
        font-size: 1.2rem;
      }
-     
+
      .admin-gear:hover {
        transform: translateY(-50%) scale(1.1);
        box-shadow: 0 6px 20px rgba(108, 99, 255, 0.5);
        animation: spin 1s linear infinite;
      }
-     
+
      .admin-gear.admin-active {
        background: linear-gradient(45deg, #00ff7f, #32cd32);
        box-shadow: 0 4px 15px rgba(0, 255, 127, 0.4);
      }
-     
+
      .admin-gear.admin-active:hover {
        box-shadow: 0 6px 20px rgba(0, 255, 127, 0.6);
      }
-     
+
      @keyframes spin {
        from { transform: translateY(-50%) rotate(0deg); }
        to { transform: translateY(-50%) rotate(360deg); }
@@ -1385,6 +1376,10 @@
       transform: translateY(-50%) scale(1.1);
     }
 
+    /* Left-side nav button for Stories */
+    .scroll-indicator.left { left: 0; right: auto; display: none; }
+
+
     .story-modal {
       display: none;
       position: fixed;
@@ -1518,52 +1513,52 @@
       .stories-container {
         gap: 8px;
       }
-      
+
       .story-item {
         width: 100px;
         height: 160px;
       }
-      
+
       .story-item .story-image {
         height: 110px;
       }
-      
+
       .story-item .story-profile {
         width: 35px;
         height: 35px;
       }
-      
+
       .story-item .story-preview {
         width: 20px;
         height: 20px;
       }
-      
+
       .story-item .story-name {
         font-size: 0.8rem;
         padding: 15px 8px 8px 8px;
       }
-      
+
       .story-modal-content {
         padding: 20px;
         margin: 20px;
       }
-      
+
       .story-modal-content video {
         max-width: 100%;
         height: auto;
         max-height: 50vh;
       }
-      
+
       /* Better video container sizing for mobile */
       .story-modal-content iframe {
         max-height: 50vh;
       }
-      
+
       /* Adjust padding for portrait videos on mobile */
       .story-modal-content div[style*="padding-bottom: 177.78%"] {
         padding-bottom: 177.78% !important;
       }
-      
+
       .story-modal-content div[style*="padding-bottom: 125%"] {
         padding-bottom: 125% !important;
       }
@@ -1621,7 +1616,7 @@
       max-width: 450px;
       width: 90%;
       border: 2px solid rgba(108, 99, 255, 0.3);
-      box-shadow: 
+      box-shadow:
         0 0 60px rgba(108, 99, 255, 0.4),
         0 20px 40px rgba(0, 0, 0, 0.5);
       position: relative;
@@ -1641,11 +1636,11 @@
     }
 
     @keyframes lockGlow {
-      0% { 
+      0% {
         text-shadow: 0 0 20px rgba(108, 99, 255, 0.8);
         transform: scale(1);
       }
-      100% { 
+      100% {
         text-shadow: 0 0 30px rgba(108, 99, 255, 1), 0 0 40px rgba(108, 99, 255, 0.6);
         transform: scale(1.05);
       }
@@ -1692,7 +1687,7 @@
     .admin-password-input:focus {
       outline: none;
       border-color: #6c63ff;
-      box-shadow: 
+      box-shadow:
         0 0 20px rgba(108, 99, 255, 0.4),
         0 0 40px rgba(108, 99, 255, 0.2);
       background: rgba(0, 0, 0, 0.5);
@@ -1745,23 +1740,44 @@
         padding: 30px 20px;
         margin: 20px;
       }
-      
+
       .admin-login-buttons {
         flex-direction: column;
         gap: 15px;
       }
-      
+
       .admin-cancel-btn,
       .admin-login-btn {
         width: 100%;
       }
     }
-    
+
     /* Feed (Facebook-like) */
     .feed-section {
-      margin-top: 25px;
+      margin-top: 0;
       padding: 0;
     }
+
+    /* Remove gap above the feed container */
+    #feedRoot { margin: 0 auto; }
+
+    /* Remove bottom margin from the top container so it touches the feed */
+    .profile-container:not(#feedRoot) { margin-bottom: 0; }
+
+    /* Footer inside top container shouldn't add space when empty */
+    .footer { margin-top: 0; }
+
+    /* Tighten spacing below the Stories block */
+    #storiesRoot { padding-bottom: 0; }
+    .story-section { padding-bottom: 0; }
+    .stories-container { padding-bottom: 0; }
+
+    /* Hide horizontal scrollbar in Stories while keeping scroll functionality */
+    .stories-container { scrollbar-width: none; -ms-overflow-style: none; }
+    .stories-container::-webkit-scrollbar { width: 0; height: 0; background: transparent; }
+
+
+
     .feed-header {
       display: flex;
       align-items: center;
@@ -1837,6 +1853,10 @@
     .post-author { font-weight: 700; }
     .post-time { color: #aaa; font-size: 0.85rem; }
     .post-text { white-space: pre-wrap; margin: 8px 0; }
+    /* See more/less for long post text */
+    .post-text.clamped { display: -webkit-box; -webkit-line-clamp: 5; line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; white-space: normal; }
+    .see-more { color: #6c63ff; cursor: pointer; font-weight: 600; display: inline-block; margin: 4px 0 0; }
+
     .post-image { width: 100%; height: auto; border-radius: 10px; margin: 6px 0; max-height: 70vh; object-fit: contain; background: #000; }
     .post-video { width: 100%; border-radius: 10px; margin: 6px 0; background: #000; }
     .post-video video { width: 100%; height: auto; max-height: 70vh; border-radius: 10px; object-fit: contain; background: #000; }
@@ -1921,6 +1941,35 @@
     .image-viewer-actions { display:flex; gap:8px; }
     .image-viewer-actions button { flex:1; background: rgba(255,255,255,0.06); color:#f5f5f5; border:1px solid rgba(108,99,255,0.2); border-radius:10px; padding:8px; cursor:pointer; }
     @media (max-width: 900px){ .image-viewer { grid-template-columns: 1fr; height: 88vh; } }
+
+    /* Left sidebar (desktop) */
+    .left-sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 270px; padding: 70px 10px; overflow-y: auto; background: rgba(10,10,20,0.35); border-right: 1px solid rgba(255,255,255,0.06); backdrop-filter: blur(6px); z-index: 20; display: none; }
+
+    .sidebar-title { color: #aaa; font-weight: 600; font-size: 0.9rem; padding: 10px 10px 6px; text-align: left; }
+    .sidebar-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 8px 0; }
+    .sidebar-item { display: flex; align-items: center; gap: 12px; padding: 8px 10px; border-radius: 10px; color: #ddd; text-align: left; cursor: pointer; position: relative; transition: background 0.2s ease, box-shadow 0.2s ease; }
+    .sidebar-item:hover, .sidebar-item:focus-visible { background: rgba(255,255,255,0.08); box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset, 0 6px 16px rgba(0,0,0,0.28); }
+    .sidebar-item i { width: 22px; text-align: center; font-size: 1.1rem; }
+    .sidebar-item img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+    .left-sidebar a.sidebar-item { text-decoration: none; color: inherit; }
+    .left-sidebar a.sidebar-item:visited { color: inherit; }
+    @media (min-width: 1200px) { .left-sidebar { display: block; } }
+
+    /* Chats section */
+    .chats-section { background: rgba(255,255,255,0.06); border: 1px solid rgba(108,99,255,0.2); }
+    .chats-header { display: flex; align-items: center; gap: 10px; justify-content: center; margin-bottom: 12px; }
+    .chat-list { display: flex; flex-direction: column; gap: 8px; }
+    .chat-item { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(108,99,255,0.2); border-radius: 12px; padding: 8px 10px; }
+    .chat-avatar { position: relative; width: 42px; height: 42px; border-radius: 50%; border: 2px solid #6c63ff; object-fit: cover; }
+    .chat-status { position: relative; }
+    .chat-status::after { content: ''; position: absolute; right: 0; bottom: 0; width: 10px; height: 10px; background: #31a24c; border: 2px solid #211e1e; border-radius: 50%; }
+    .chat-meta { display: flex; flex-direction: column; align-items: flex-start; }
+    .chat-name { font-weight: 600; }
+    .chat-last { font-size: 0.9rem; color: #bbb; }
+
+    /* Friends grid tweaks (reuse existing styles) */
+    #friendsRoot .friends-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+
   </style>
 </head>
 <body>
@@ -1944,11 +1993,31 @@
     <div class="space-particle"></div>
     <div class="space-particle"></div>
     <div class="space-particle"></div>
+
     <div class="space-particle"></div>
     <div class="space-particle"></div>
   </div>
+  <!-- Left Sidebar -->
+  <aside class="left-sidebar">
+    <a class="sidebar-item" href="https://xat.me/Lemo" id="sidebarProfileLink">
+      <img src="https://img.alfrsantv.com/img/f17546454730791.jpg" alt="" />
+      <div>Ahmed Sayed</div>
+    </a>
+    <div class="sidebar-item"><i class="fa-solid fa-user-group"></i> <div>Friends</div></div>
+    <div class="sidebar-item"><i class="fa-solid fa-robot"></i> <div>Meta AI</div></div>
+    <div class="sidebar-item"><i class="fa-solid fa-chart-column"></i> <div>Professional dashboard</div></div>
+    <div class="sidebar-item"><i class="fa-solid fa-layer-group"></i> <div>Groups</div></div>
+    <div class="sidebar-item"><i class="fa-solid fa-bookmark"></i> <div>Saved</div></div>
+    <div class="sidebar-item"><i class="fa-solid fa-newspaper"></i> <div>Feeds</div></div>
+    <div class="sidebar-item"><i class="fa-solid fa-ellipsis"></i> <div>See more</div></div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-title">About me & Contact</div>
+    <a class="sidebar-item" href="#/about" onclick="routeTo('about', event)"><i class="fa-solid fa-user about-me-icon"></i> <div>About Me</div></a>
+    <a class="sidebar-item" href="#/contact" onclick="routeTo('contact', event)"><i class="fa-solid fa-envelope contact-icon"></i> <div>Contact</div></a>
+  </aside>
 
-  <div class="profile-container">
+
+  <div class="profile-container" id="storiesRoot">
     <!-- Floating background icons -->
     <div class="floating-icons">
       <i class="fa-solid fa-star"></i>
@@ -1967,6 +2036,7 @@
          </div>
         <div class="stories-container" id="storiesContainer">
           <!-- Add Story Button -->
+
           <div class="story-item add-story" onclick="openStoryModal()">
             <div class="add-button">
               <i class="fa-solid fa-plus"></i>
@@ -1975,32 +2045,15 @@
           </div>
           <!-- Existing stories will be added here dynamically -->
         </div>
-        <div class="scroll-indicator" onclick="scrollStories()">
+        <div class="scroll-indicator left" id="storyNavLeft" onclick="scrollStories('left')">
+          <i class="fa-solid fa-chevron-left"></i>
+        </div>
+        <div class="scroll-indicator" id="storyNavRight" onclick="scrollStories('right')">
           <i class="fa-solid fa-chevron-right"></i>
         </div>
-        
+
       </div>
     </div>
-
-    <!-- <img src="https://img.alfrsantv.com/img/f17546454730791.jpg" alt="Lemo" class="profile-pic"> -->
-    <!-- <div class="header-section"> -->
-      <!-- <div class="header-decoration">
-        <div class="decoration-circle"></div>
-        <div class="decoration-circle"></div>
-        <div class="decoration-circle"></div>
-      </div>
-      <div class="name-container">
-        <div class="name-glow">Lemo</div>
-        <h1 class="name-text">Lemo</h1>
-      </div>
-      <div class="id-container">
-        <span class="id-text">ID: 1466124961</span>
-      </div>
-      <p class="typewriter">Welcome to my profile space 🌌 — let's connect!</p>
-     </div> -->
-
-    <!-- <div class="divider"></div> -->
-
 
     <div class="footer">
     </div>
@@ -2055,69 +2108,7 @@
       </div>
 
 
-      <!-- About Me Section moved to Posts -->
-      <div class="section about-me-section">
-        <div class="about-me-content">
-          <div class="about-me-header">
-            <i class="fa-solid fa-user about-me-icon"></i>
-            <h3 class="about-me-title">About Me</h3>
-          </div>
 
-          <div class="about-me-text">
-            <div class="about-me-line">
-              <span class="about-me-emoji">👋</span>
-              <div class="about-me-description">
-                <strong>Hey, I'm Lemo</strong> - A friendly soul who loves connecting with amazing people!
-              </div>
-            </div>
-
-            <div class="about-me-line">
-              <span class="about-me-emoji">✨</span>
-              <div class="about-me-description">
-                <strong>Friendly, positive & always up for a good chat</strong> 💬
-              </div>
-            </div>
-
-            <div class="about-me-line">
-              <span class="about-me-emoji">🎶</span>
-              <div class="about-me-description">
-                <strong>Love music</strong>, 💻 <strong>programming</strong>, and <strong>meeting new people</strong> 🌐
-              </div>
-            </div>
-
-            <div class="motto-section">
-              <div class="motto-text">
-                "Live simply, dream big, and enjoy every moment."
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-            <!-- Contact Section -->
-      <div class="section contact-section">
-        <div class="contact-content">
-          <div class="contact-header">
-            <i class="fa-solid fa-envelope contact-icon"></i>
-            <h3 class="contact-title">Contact</h3>
-          </div>
-          <div class="contact-description">
-            Feel free to reach out for collaborations, discussions, or just a friendly chat!
-          </div>
-          <div class="social-links">
-            <a href="https://www.facebook.com/ahmed.s6yed" target="_blank">
-              <i class="fab fa-facebook"></i>
-              <span class="social-label">Facebook</span>
-            </a>
-            <a href="https://xat.com/bentarab" target="_blank">
-              <i class="fa-solid fa-comment-dots"></i>
-              <span class="social-label">Xat Chat</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-        <div class="footer">
-      ✨ Thanks for visiting my profile — let's make some memories together! ✨
     </div>
   </div>
   </div>
@@ -2153,12 +2144,49 @@
     </div>
   </div>
 
+  <!-- About Me (moved out of feed; hidden until opened from sidebar) -->
+  <div class="profile-container" id="aboutRoot" style="display:none;">
+    <div class="section about-me-section">
+      <div class="about-me-content">
+        <div class="about-me-header">
+          <i class="fa-solid fa-user about-me-icon"></i>
+          <h3 class="about-me-title">About Me</h3>
+        </div>
+        <div class="about-me-text">
+          <div class="about-me-line">
+            <span class="about-me-emoji">👋</span>
+            <div class="about-me-description">
+              <strong>Hey, I'm Lemo</strong> - A friendly soul who loves connecting with amazing people!
+            </div>
+          </div>
+          <div class="about-me-line">
+            <span class="about-me-emoji">✨</span>
+            <div class="about-me-description">
+              <strong>Friendly, positive & always up for a good chat</strong> 💬
+            </div>
+          </div>
+          <div class="about-me-line">
+            <span class="about-me-emoji">🎶</span>
+            <div class="about-me-description">
+              <strong>Love music</strong>, 💻 <strong>programming</strong>, and <strong>meeting new people</strong> 🌐
+            </div>
+          </div>
+          <div class="motto-section">
+            <div class="motto-text">"Live simply, dream big, and enjoy every moment."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <!-- Visitor Profile Modal -->
   <div class="visitor-modal" id="visitorModal">
     <div class="visitor-card">
       <h3>Choose your name and image</h3>
       <div class="visitor-row">
         <img id="visitorAvatarPreview" class="visitor-avatar" src="https://img.alfrsantv.com/img/f17546454730791.jpg" alt="">
+
         <input id="visitorAvatarUrl" type="url" placeholder="Avatar image URL (optional)">
         <input id="visitorAvatarFile" type="file" accept="image/*" style="max-width: 100%;">
       </div>
@@ -2171,6 +2199,32 @@
       </div>
     </div>
   </div>
+
+  <!-- Contact (standalone page; hidden until routed) -->
+  <div class="profile-container" id="contactRoot" style="display:none;">
+    <div class="section contact-section">
+      <div class="contact-content">
+        <div class="contact-header">
+          <i class="fa-solid fa-envelope contact-icon"></i>
+          <h3 class="contact-title">Contact</h3>
+        </div>
+        <div class="contact-description">
+          Feel free to reach out for collaborations, discussions, or just a friendly chat!
+        </div>
+        <div class="social-links">
+          <a href="https://www.facebook.com/ahmed.s6yed" target="_blank">
+            <i class="fab fa-facebook"></i>
+            <span class="social-label">Facebook</span>
+          </a>
+          <a href="https://xat.com/bentarab" target="_blank">
+            <i class="fa-solid fa-comment-dots"></i>
+            <span class="social-label">Xat Chat</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- Story Modal -->
   <div class="story-modal" id="storyModal">
@@ -2232,16 +2286,75 @@
 
   <!-- Configuration -->
   <script src="config.js"></script>
-  
+
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
-  
+
   <script>
     // Initialize Firebase using config
     firebase.initializeApp(config.firebase);
     const db = firebase.firestore();
-    
+
+
+    // Simple hash-based router (Home, About, Contact)
+    function ensureRouteContainers(){
+      try {
+        const about = document.getElementById('aboutRoot');
+        const contact = document.getElementById('contactRoot');
+        if (about && about.parentElement !== document.body) document.body.appendChild(about);
+        if (contact && contact.parentElement !== document.body) document.body.appendChild(contact);
+      } catch(_){ /* no-op */ }
+    }
+
+    function setView(view){
+      ensureRouteContainers();
+      const stories = document.getElementById('storiesRoot');
+      const feed = document.getElementById('feedRoot');
+      const about = document.getElementById('aboutRoot');
+      const contact = document.getElementById('contactRoot');
+      const all = Array.from(document.querySelectorAll('.profile-container'));
+      const show = (el)=>{ if(el) el.style.display = 'block'; };
+      const hide = (el)=>{ if(el) el.style.display = 'none'; };
+
+      // Hide everything by default
+      all.forEach(hide);
+
+      if(view === 'about'){
+        show(about);
+      } else if(view === 'contact'){
+        show(contact);
+      } else {
+        // Home
+        show(stories);
+        show(feed);
+      }
+      try { window.scrollTo({top:0, behavior:'smooth'}); } catch(_) { window.scrollTo(0,0); }
+    }
+
+    function routeTo(view, e){
+      if(e) e.preventDefault();
+      // Update view immediately (works even if hash doesn't change)
+      try { setView(view); } catch(_) {}
+      const newHash = view === 'home' ? '#/' : '#/' + view;
+      if (location.hash !== newHash) location.hash = newHash;
+    }
+
+    function handleHash(){
+      const h = (location.hash || '').replace(/^#\/?/, '');
+      if(h === 'about') setView('about');
+      else if(h === 'contact') setView('contact');
+      else setView('home');
+    }
+
+    // Backwards-compatible helpers
+    function openAbout(e){ return routeTo('about', e); }
+    function openContact(e){ return routeTo('contact', e); }
+
+    window.addEventListener('hashchange', handleHash);
+    document.addEventListener('DOMContentLoaded', handleHash);
+
+
     // ---------------- FEED (Facebook-like posts) ----------------
     const visitorIdKey = 'feedVisitorId';
     let visitorId = localStorage.getItem(visitorIdKey);
@@ -2249,23 +2362,23 @@
       visitorId = 'v_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
       localStorage.setItem(visitorIdKey, visitorId);
     }
-    
+
     const postsCol = () => db.collection('posts');
     const commentsSub = (postId) => postsCol().doc(postId).collection('comments');
     const visitorProfileKey = 'feedVisitorProfile';
     let visitorProfile = null;
     try { visitorProfile = JSON.parse(localStorage.getItem(visitorProfileKey) || 'null'); } catch(_) { visitorProfile = null; }
-    
+
     function ensureScrollEnabled() {
       try { document.body.style.overflow = 'auto'; } catch(_) {}
     }
-    
+
     function updateComposerForAdmin() {
       const composer = document.getElementById('feedRoot')?.querySelector('.composer');
       if (!composer) return;
       composer.style.display = isAdmin ? '' : 'none';
     }
-    
+
     function fmtTime(ts) {
       try {
         const d = ts?.toDate ? ts.toDate() : new Date(ts);
@@ -2277,7 +2390,7 @@
         return d.toLocaleString();
       } catch(e) { return ''; }
     }
-    
+
     // Composer handlers
     let composerImageData = null;
     let composerVideoData = null;
@@ -2344,7 +2457,7 @@
     });
     function openVisitorModal(){ document.getElementById('visitorModal').classList.add('active'); document.body.style.overflow='hidden'; }
     function closeVisitorModal(){ document.getElementById('visitorModal').classList.remove('active'); document.body.style.overflow='auto'; }
-    
+
     async function submitPost() {
       if (!isAdmin) { try { showAdminLoginForGear(); } catch(_) { showNotification('Admin only.'); } return; }
       const text = (document.getElementById('composerText')?.value || '').trim();
@@ -2382,7 +2495,7 @@
         ensureScrollEnabled();
       }
     }
-    
+
     function bindFeedRealtime() {
       postsCol().orderBy('createdAt','desc').limit(50).onSnapshot(snap => {
         const list = document.getElementById('postsList');
@@ -2433,7 +2546,7 @@
         }
       });
     }
-    
+
     function renderPost(post) {
       const wrapper = document.createElement('div');
       wrapper.className = 'post';
@@ -2476,6 +2589,7 @@
         const rtl = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/.test(raw);
         ptext.style.textAlign = rtl ? 'right' : 'left';
         ptext.setAttribute('dir', rtl ? 'rtl' : 'ltr');
+        setupSeeMore(ptext);
       }
       if (isAdmin) {
         const del = wrapper.querySelector('.delete-post');
@@ -2483,14 +2597,14 @@
       }
       return wrapper;
     }
-    
+
     function escapeHtml(t){
       return t.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]));
     }
     function formatExactTime(ts){
       try { const d = ts?.toDate ? ts.toDate() : new Date(ts); return d.toLocaleString(); } catch(e){ return ''; }
     }
-    
+
     async function toggleLike(postId){
       const ref = postsCol().doc(postId);
       await db.runTransaction(async tx => {
@@ -2502,7 +2616,33 @@
         tx.update(ref, { likedBy: Array.from(set), likesCount: Array.from(set).length });
       }).catch(()=>{});
     }
-    
+
+    // Add "See more" toggling if text is long
+    function setupSeeMore(ptext){
+      try {
+        ptext.classList.add('clamped');
+        setTimeout(() => {
+          // If no overflow under clamp, remove clamp and skip toggle
+          if (ptext.scrollHeight <= ptext.clientHeight + 1) { ptext.classList.remove('clamped'); return; }
+          const toggle = document.createElement('span');
+          toggle.className = 'see-more';
+          toggle.textContent = 'See more';
+          toggle.addEventListener('click', () => {
+            const isClamped = ptext.classList.contains('clamped');
+            if (isClamped) {
+              ptext.classList.remove('clamped');
+              toggle.textContent = 'See less';
+            } else {
+              ptext.classList.add('clamped');
+              toggle.textContent = 'See more';
+            }
+          });
+          ptext.insertAdjacentElement('afterend', toggle);
+        }, 0);
+      } catch(e) { /* no-op */ }
+    }
+
+
     const openComments = new Map();
     function toggleComments(postId, forceOpen = false){
       const box = document.getElementById('c_'+postId);
@@ -2516,18 +2656,18 @@
         const list = box.querySelector('.comments-list');
         list.innerHTML = '';
         let count = 0;
-        s.forEach(d=>{ 
-          count++; 
+        s.forEach(d=>{
+          count++;
           const data = d.data();
-          data._id = d.id; 
-          data._postId = postId; 
+          data._id = d.id;
+          data._postId = postId;
           list.appendChild(renderComment(data));
         });
         postsCol().doc(postId).update({ commentsCount: count }).catch(()=>{});
       });
       openComments.set(postId, unsub);
     }
-    
+
     function renderCommentsUI(postId, container){
       container.innerHTML = `
         <div class="comments-list"></div>
@@ -2681,7 +2821,7 @@
       };
       try { await commentsSub(postId).add(c); } catch(e) { console.error(e); }
     }
-    
+
     async function deletePost(postId){
       showCustomConfirm('Delete this post and all of its comments?', async () => {
         try {
@@ -2755,11 +2895,11 @@
         if (!list) return;
         list.innerHTML = '';
         let count = 0;
-        s.forEach(d=>{ 
-          count++; 
+        s.forEach(d=>{
+          count++;
           const data = d.data();
           data._id = d.id; data._postId = post.id;
-          list.appendChild(renderComment(data)); 
+          list.appendChild(renderComment(data));
         });
         comments.textContent = `${count} comments`;
       });
@@ -2790,20 +2930,20 @@
       if (viewerPostUnsub) { viewerPostUnsub(); viewerPostUnsub = null; }
       if (viewerTimeTicker) { clearInterval(viewerTimeTicker); viewerTimeTicker = null; }
     }
-    
+
     // ---------------- Stories existing code below ----------------
-    
+
     // Story functionality
     let stories = [];
     let isAdmin = false;
     let adminPassword = config.admin.password;
-    
+
     // Video platform detection and embedding
     function detectVideoPlatform(url) {
       if (!url) return null;
-      
+
       const urlLower = url.toLowerCase();
-      
+
       // YouTube (including Shorts)
       if (urlLower.includes('youtube.com/watch') || urlLower.includes('youtu.be/') || urlLower.includes('youtube.com/shorts/')) {
         const videoId = extractYouTubeId(url);
@@ -2817,7 +2957,7 @@
           aspectRatio: isShorts ? 'portrait' : 'landscape'
         };
       }
-      
+
       // Facebook
       if (urlLower.includes('facebook.com/') && (urlLower.includes('/v/') || urlLower.includes('/video/'))) {
         return {
@@ -2827,7 +2967,7 @@
           aspectRatio: 'landscape' // Facebook videos are typically landscape
         };
       }
-      
+
       // Instagram
       if (urlLower.includes('instagram.com/') && urlLower.includes('/p/')) {
         return {
@@ -2837,7 +2977,7 @@
           aspectRatio: 'portrait' // Instagram posts are typically portrait/square
         };
       }
-      
+
       // TikTok
       if (urlLower.includes('tiktok.com/')) {
         return {
@@ -2847,7 +2987,7 @@
           aspectRatio: 'portrait' // TikTok videos are typically portrait
         };
       }
-      
+
       // Direct video file
       if (urlLower.match(/\.(mp4|webm|ogg|mov|avi|mkv)$/)) {
         return {
@@ -2856,23 +2996,23 @@
           aspectRatio: 'auto' // Will be determined by the video's natural aspect ratio
         };
       }
-      
+
       return null;
     }
-    
+
     function extractYouTubeId(url) {
       // Handle YouTube Shorts URLs
       if (url.includes('/shorts/')) {
         const shortsMatch = url.match(/\/shorts\/([^/?&#]+)/);
         return shortsMatch ? shortsMatch[1] : null;
       }
-      
+
       // Handle regular YouTube URLs
       const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
       const match = url.match(regExp);
       return (match && match[2].length === 11) ? match[2] : null;
     }
-    
+
          function openStoryModal() {
        if (!isAdmin) {
          showAdminLogin();
@@ -2881,12 +3021,12 @@
        document.getElementById('storyModal').classList.add('active');
        document.body.style.overflow = 'hidden';
      }
-     
+
      function showAdminLogin() {
        const loginModal = document.createElement('div');
        loginModal.className = 'admin-login-modal active';
        loginModal.style.zIndex = '1003';
-       
+
        loginModal.innerHTML = `
          <div class="admin-login-content">
            <div class="admin-login-header">
@@ -2894,11 +3034,11 @@
              <h3 class="admin-login-title">Admin Access Required</h3>
              <p class="admin-login-subtitle">Enter admin password to create stories</p>
            </div>
-           
+
            <div class="admin-login-form">
              <input type="password" id="adminPasswordInput" placeholder="Enter password..." class="admin-password-input">
            </div>
-           
+
            <div class="admin-login-buttons">
              <button class="admin-cancel-btn" onclick="this.parentElement.parentElement.parentElement.remove(); document.body.style.overflow = 'auto';">
                <i class="fa-solid fa-times"></i> Cancel
@@ -2909,15 +3049,15 @@
            </div>
          </div>
        `;
-       
+
        document.body.appendChild(loginModal);
        document.body.style.overflow = 'hidden';
-       
+
        // Focus on password input
        setTimeout(() => {
          document.getElementById('adminPasswordInput').focus();
        }, 100);
-       
+
        // Allow Enter key to submit
        document.getElementById('adminPasswordInput').addEventListener('keypress', function(e) {
          if (e.key === 'Enter') {
@@ -2925,23 +3065,23 @@
          }
        });
      }
-     
+
            function verifyAdminPassword() {
         const inputPassword = document.getElementById('adminPasswordInput').value;
-        
+
         if (inputPassword === adminPassword) {
           isAdmin = true;
           sessionStorage.setItem('lemoAdminSession', 'true'); // Save admin session
           document.querySelector('.admin-login-modal.active').remove();
           document.body.style.overflow = 'auto';
           showNotification('Admin access granted! Welcome back! 🔓');
-          
+
           // Update gear icon to show admin is active
           updateGearIcon();
           // Refresh posts to show delete buttons
           if (typeof refreshPostsUI === 'function') refreshPostsUI();
           try { document.dispatchEvent(new CustomEvent('admin-state-changed', { detail: { isAdmin: true } })); } catch(_) {}
-          
+
           // Now open the story modal
           setTimeout(() => {
             openStoryModal();
@@ -2952,7 +3092,7 @@
           document.getElementById('adminPasswordInput').focus();
         }
       }
-      
+
              function updateGearIcon() {
          const gearIcon = document.querySelector('.admin-gear');
          if (isAdmin) {
@@ -2965,7 +3105,7 @@
            gearIcon.title = 'Admin Settings';
          }
        }
-       
+
        function handleGearClick() {
          if (isAdmin) {
            // If admin is logged in, show logout confirmation
@@ -2975,12 +3115,12 @@
            showAdminLoginForGear();
          }
        }
-       
+
        function showAdminLoginForGear() {
          const loginModal = document.createElement('div');
          loginModal.className = 'admin-login-modal active';
          loginModal.style.zIndex = '1003';
-         
+
          loginModal.innerHTML = `
            <div class="admin-login-content">
              <div class="admin-login-header">
@@ -2988,11 +3128,11 @@
                <h3 class="admin-login-title">Admin Access Required</h3>
                <p class="admin-login-subtitle">Enter admin password to access admin features</p>
              </div>
-             
+
              <div class="admin-login-form">
                <input type="password" id="adminPasswordInput" placeholder="Enter password..." class="admin-password-input">
              </div>
-             
+
              <div class="admin-login-buttons">
                <button class="admin-cancel-btn" onclick="this.parentElement.parentElement.parentElement.remove(); document.body.style.overflow = 'auto';">
                  <i class="fa-solid fa-times"></i> Cancel
@@ -3003,15 +3143,15 @@
              </div>
            </div>
          `;
-         
+
          document.body.appendChild(loginModal);
          document.body.style.overflow = 'hidden';
-         
+
          // Focus on password input
          setTimeout(() => {
            document.getElementById('adminPasswordInput').focus();
          }, 100);
-         
+
          // Allow Enter key to submit
          document.getElementById('adminPasswordInput').addEventListener('keypress', function(e) {
            if (e.key === 'Enter') {
@@ -3019,20 +3159,20 @@
            }
          });
        }
-       
+
        function verifyAdminPasswordForGear() {
          const inputPassword = document.getElementById('adminPasswordInput').value;
-         
+
          if (inputPassword === adminPassword) {
            isAdmin = true;
            sessionStorage.setItem('lemoAdminSession', 'true'); // Save admin session
            document.querySelector('.admin-login-modal.active').remove();
            document.body.style.overflow = 'auto';
            showNotification('Admin access granted! Welcome back! 🔓');
-           
+
            // Update gear icon to show admin is active
            updateGearIcon();
-           
+
            // Re-render stories to show admin features
            renderStories();
           if (typeof refreshPostsUI === 'function') refreshPostsUI();
@@ -3044,12 +3184,12 @@
            document.getElementById('adminPasswordInput').focus();
          }
        }
-       
+
        function showLogoutConfirm() {
          const logoutModal = document.createElement('div');
          logoutModal.className = 'story-modal active';
          logoutModal.style.zIndex = '1003';
-         
+
          logoutModal.innerHTML = `
            <div class="story-modal-content" style="max-width: 400px;">
              <div style="text-align: center;">
@@ -3058,7 +3198,7 @@
                  <h3 style="color: #6c63ff; margin-bottom: 15px; font-size: 1.3rem;">Logout Admin</h3>
                  <p style="color: #f5f5f5; font-size: 1.1rem; line-height: 1.5;">Are you sure you want to logout from admin mode?</p>
                </div>
-               
+
                <div style="display: flex; gap: 15px; justify-content: center;">
                  <button onclick="this.parentElement.parentElement.parentElement.parentElement.remove(); document.body.style.overflow = 'auto';" style="background: linear-gradient(45deg, #6c63ff, #00d4ff); color: white; border: none; padding: 12px 25px; border-radius: 20px; cursor: pointer; font-size: 1rem; font-weight: 600; transition: all 0.3s ease;">
                    <i class="fa-solid fa-times"></i> Cancel
@@ -3070,11 +3210,11 @@
              </div>
            </div>
          `;
-         
+
          document.body.appendChild(logoutModal);
          document.body.style.overflow = 'hidden';
        }
-       
+
        function logoutAdmin() {
          isAdmin = false;
          sessionStorage.removeItem('lemoAdminSession');
@@ -3087,13 +3227,13 @@
         updateComposerForAdmin();
         try { document.dispatchEvent(new CustomEvent('admin-state-changed', { detail: { isAdmin: false } })); } catch(_) {}
        }
-    
+
          function closeStoryModal() {
        document.getElementById('storyModal').classList.remove('active');
        document.body.style.overflow = 'auto';
        document.getElementById('storyForm').reset();
        document.getElementById('storyPreview').style.display = 'none';
-       
+
        // Reset file uploads
        uploadedImageData = null;
        uploadedVideoData = null;
@@ -3102,10 +3242,10 @@
        document.getElementById('storyImageFile').value = '';
        document.getElementById('storyVideoFile').value = '';
      }
-    
+
     async function addStory(title, content, imageUrl = null, videoUrl = null) {
       const videoInfo = detectVideoPlatform(videoUrl);
-      
+
       // For direct video files, try to detect aspect ratio
       if (videoInfo && videoInfo.platform === 'direct') {
         try {
@@ -3114,7 +3254,7 @@
           console.log('Could not detect video aspect ratio:', error);
         }
       }
-      
+
       const story = {
         title: title,
         content: content,
@@ -3125,7 +3265,7 @@
         views: 0,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       };
-      
+
       try {
         const docRef = await db.collection('stories').add(story);
         story.id = docRef.id; // Use Firebase document ID
@@ -3138,14 +3278,14 @@
         showNotification('Error adding story. Please try again! ❌');
       }
     }
-    
+
     // Function to detect video aspect ratio for direct video files
     function detectVideoAspectRatio(videoUrl, videoInfo) {
       return new Promise((resolve, reject) => {
         const video = document.createElement('video');
         video.style.display = 'none';
         video.preload = 'metadata';
-        
+
         video.onloadedmetadata = function() {
           const aspectRatio = video.videoWidth / video.videoHeight;
           if (aspectRatio > 1) {
@@ -3159,23 +3299,23 @@
           document.body.removeChild(video);
           resolve(videoInfo);
         };
-        
+
         video.onerror = function() {
           document.body.removeChild(video);
           reject(new Error('Could not load video metadata'));
         };
-        
+
         video.src = videoUrl;
         document.body.appendChild(video);
       });
     }
-    
+
          function renderStories() {
        const container = document.getElementById('storiesContainer');
-       
+
        // Clear existing content
        container.innerHTML = '';
-       
+
        // Create and add the "Add Story" button if admin
        if (isAdmin) {
          const addButton = document.createElement('div');
@@ -3189,7 +3329,7 @@
          `;
          container.appendChild(addButton);
        }
-       
+
        // Add existing stories
        if (stories && stories.length > 0) {
          stories.forEach((story, index) => {
@@ -3209,16 +3349,16 @@
          container.appendChild(noStoriesMessage);
        }
      }
-    
+
     function createStoryElement(story, index) {
       const storyDiv = document.createElement('div');
       storyDiv.className = 'story-item';
       storyDiv.onclick = () => viewStory(story, index);
-      
+
       // Get story image or create placeholder
       let storyImage = story.imageUrl || 'https://img.alfrsantv.com/img/f17546454730791.jpg';
       let previewImage = story.videoUrl ? 'https://img.alfrsantv.com/img/f17546454730791.jpg' : storyImage;
-      
+
       // Create story content based on type
       let storyContent = '';
       if (story.videoUrl) {
@@ -3230,7 +3370,7 @@
           previewImage = 'https://img.alfrsantv.com/img/f17546454730791.jpg';
         }
       }
-      
+
       storyDiv.innerHTML = `
         <img src="${storyImage}" alt="${story.title}" class="story-image" onerror="this.src='https://img.alfrsantv.com/img/f17546454730791.jpg'">
         <div class="story-profile">
@@ -3241,12 +3381,12 @@
         </div>
                  <!-- Removed video indicator icon -->
       `;
-      
+
              // Removed the "NEW" indicator code
-      
+
       return storyDiv;
     }
-    
+
     async function viewStory(story, index) {
       // Increment view count
       story.views++;
@@ -3259,12 +3399,12 @@
         // If update fails, revert the view count
         story.views--;
       }
-      
+
       // Create story viewer modal
       const viewerModal = document.createElement('div');
       viewerModal.className = 'story-modal active';
       viewerModal.style.zIndex = '1001';
-      
+
       viewerModal.innerHTML = `
                  <div class="story-modal-content" style="max-width: 700px;">
            <button class="story-modal-close" onclick="this.parentElement.parentElement.remove(); document.body.style.overflow = 'auto';">
@@ -3272,14 +3412,14 @@
            </button>
           <div style="text-align: center;">
             <h3 style="color: #6c63ff; margin-bottom: 15px;">${story.title}</h3>
-            
+
             ${story.videoUrl ? `
               <div style="margin-bottom: 20px; position: relative;">
                 ${story.videoInfo && story.videoInfo.platform === 'youtube' ? `
                   <div style="position: relative; width: 100%; padding-bottom: ${story.videoInfo.aspectRatio === 'portrait' ? '177.78%' : '56.25%'}; border-radius: 15px; overflow: hidden;">
-                    <iframe 
-                      src="${story.videoInfo.embedUrl}?autoplay=0&rel=0" 
-                      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
+                    <iframe
+                      src="${story.videoInfo.embedUrl}?autoplay=0&rel=0"
+                      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
                       allowfullscreen>
                     </iframe>
                     <div style="position: absolute; top: 10px; right: 10px; background: rgba(255, 0, 0, 0.9); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; z-index: 10;">
@@ -3288,11 +3428,11 @@
                   </div>
                 ` : story.videoInfo && story.videoInfo.platform === 'facebook' ? `
                   <div style="position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 15px; overflow: hidden;">
-                    <iframe 
-                      src="${story.videoInfo.embedUrl}" 
-                      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
-                      scrolling="no" 
-                      frameborder="0" 
+                    <iframe
+                      src="${story.videoInfo.embedUrl}"
+                      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+                      scrolling="no"
+                      frameborder="0"
                       allowfullscreen="true">
                     </iframe>
                     <div style="position: absolute; top: 10px; right: 10px; background: rgba(24, 119, 242, 0.9); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; z-index: 10;">
@@ -3301,10 +3441,10 @@
                   </div>
                 ` : story.videoInfo && story.videoInfo.platform === 'instagram' ? `
                   <div style="position: relative; width: 100%; padding-bottom: 125%; border-radius: 15px; overflow: hidden;">
-                    <iframe 
-                      src="${story.videoInfo.embedUrl}" 
-                      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
-                      scrolling="no" 
+                    <iframe
+                      src="${story.videoInfo.embedUrl}"
+                      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+                      scrolling="no"
                       frameborder="0">
                     </iframe>
                     <div style="position: absolute; top: 10px; right: 10px; background: rgba(228, 64, 95, 0.9); color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; z-index: 10;">
@@ -3313,9 +3453,9 @@
                   </div>
                 ` : story.videoInfo && story.videoInfo.platform === 'tiktok' ? `
                   <div style="position: relative; width: 100%; padding-bottom: 177.78%; border-radius: 15px; overflow: hidden;">
-                    <blockquote 
-                      class="tiktok-embed" 
-                      cite="${story.videoInfo.originalUrl}" 
+                    <blockquote
+                      class="tiktok-embed"
+                      cite="${story.videoInfo.originalUrl}"
                       data-video-id="${story.videoInfo.originalUrl.split('/').pop()}"
                       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; max-width: none; min-width: auto;">
                       <section></section>
@@ -3339,7 +3479,7 @@
                 `}
               </div>
             ` : ''}
-            
+
             ${story.imageUrl && !story.videoUrl ? `
               <div style="margin-bottom: 20px;">
                 <img src="${story.imageUrl}" alt="${story.title}" style="max-width: 100%; border-radius: 15px;" onerror="this.style.display='none'">
@@ -3348,22 +3488,22 @@
                 </div>
               </div>
             ` : ''}
-            
+
             <div style="color: #f5f5f5; font-size: 1.1rem; line-height: 1.6; margin-bottom: 20px; text-align: left;">
               ${story.content.replace(/\\n/g, '<br>')}
             </div>
-            
+
             <div style="color: #aaa; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
               <span><i class="fa-solid fa-calendar"></i> ${story.timestamp}</span>
               <span><i class="fa-solid fa-eye"></i> ${story.views} views</span>
-              ${story.videoInfo && story.videoInfo.platform ? 
-                `<span><i class="fa-brands fa-${story.videoInfo.platform === 'youtube' ? 'youtube' : story.videoInfo.platform === 'facebook' ? 'facebook' : story.videoInfo.platform === 'instagram' ? 'instagram' : story.videoInfo.platform === 'tiktok' ? 'tiktok' : 'video'}"></i> ${story.videoInfo.platform.toUpperCase()} Video</span>` : 
+              ${story.videoInfo && story.videoInfo.platform ?
+                `<span><i class="fa-brands fa-${story.videoInfo.platform === 'youtube' ? 'youtube' : story.videoInfo.platform === 'facebook' ? 'facebook' : story.videoInfo.platform === 'instagram' ? 'instagram' : story.videoInfo.platform === 'tiktok' ? 'tiktok' : 'video'}"></i> ${story.videoInfo.platform.toUpperCase()} Video</span>` :
                 story.videoUrl ? '<span><i class="fa-solid fa-video"></i> Video Story</span>' : ''
               }
               ${story.imageUrl && !story.videoUrl ? '<span><i class="fa-solid fa-image"></i> Image Story</span>' : ''}
               ${!story.videoUrl && !story.imageUrl ? '<span><i class="fa-solid fa-file-text"></i> Text Story</span>' : ''}
             </div>
-            
+
                                                                          <div style="margin-top: 20px;">
               ${isAdmin ? `<button onclick="deleteStory('${story.id}')" style="background: linear-gradient(45deg, #ff6b6b, #ee5a52); color: white; border: none; padding: 10px 20px; border-radius: 15px; cursor: pointer; margin-right: 10px;">
                 <i class="fa-solid fa-trash"></i> Delete
@@ -3375,11 +3515,11 @@
           </div>
         </div>
       `;
-      
+
       document.body.appendChild(viewerModal);
       document.body.style.overflow = 'hidden';
     }
-    
+
                    async function deleteStory(storyId) {
         showCustomConfirm('Are you sure you want to delete this story?', async () => {
           try {
@@ -3395,12 +3535,12 @@
           }
         });
       }
-     
+
            function showCustomConfirm(message, onConfirm) {
         const confirmModal = document.createElement('div');
         confirmModal.className = 'story-modal active';
         confirmModal.style.zIndex = '1002';
-        
+
         confirmModal.innerHTML = `
           <div class="story-modal-content" style="max-width: 400px;">
             <div style="text-align: center;">
@@ -3409,7 +3549,7 @@
                 <h3 style="color: #6c63ff; margin-bottom: 15px; font-size: 1.3rem;">Confirm Action</h3>
                 <p style="color: #f5f5f5; font-size: 1.1rem; line-height: 1.5;">${message}</p>
               </div>
-              
+
                              <div style="display: flex; gap: 15px; justify-content: center;">
                  <button onclick="this.parentElement.parentElement.parentElement.parentElement.remove(); document.body.style.overflow = 'auto';" style="background: linear-gradient(45deg, #6c63ff, #00d4ff); color: white; border: none; padding: 12px 25px; border-radius: 20px; cursor: pointer; font-size: 1rem; font-weight: 600; transition: all 0.3s ease;">
                    <i class="fa-solid fa-times"></i> Cancel
@@ -3421,17 +3561,17 @@
             </div>
           </div>
         `;
-        
+
         document.body.appendChild(confirmModal);
         document.body.style.overflow = 'hidden';
-        
+
         // Add event listener to the delete button
         document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
           confirmModal.remove();
           onConfirm();
         });
       }
-    
+
     // Load stories from Firebase
     async function loadStories() {
       try {
@@ -3439,21 +3579,21 @@
           .orderBy('createdAt', 'desc')
           .limit(20)
           .get();
-        
+
         stories = [];
         snapshot.forEach(doc => {
           const story = doc.data();
           story.id = doc.id;
           stories.push(story);
         });
-        
+
         renderStories();
       } catch (error) {
         console.error('Error loading stories:', error);
         showNotification('Error loading stories. Please refresh the page! ❌');
       }
     }
-    
+
     function showNotification(message) {
       const notification = document.createElement('div');
       notification.style.cssText = `
@@ -3470,15 +3610,15 @@
         animation: slideIn 0.3s ease;
       `;
       notification.textContent = message;
-      
+
       document.body.appendChild(notification);
-      
+
       setTimeout(() => {
         notification.style.animation = 'slideOut 0.3s ease';
         setTimeout(() => notification.remove(), 300);
       }, 3000);
     }
-    
+
     // Add CSS animations for notifications
     const style = document.createElement('style');
     style.textContent = `
@@ -3492,11 +3632,11 @@
       }
     `;
     document.head.appendChild(style);
-    
+
          // File upload handling
      let uploadedImageData = null;
      let uploadedVideoData = null;
-     
+
      document.getElementById('storyImageFile').addEventListener('change', function(e) {
        const file = e.target.files[0];
        if (file) {
@@ -3509,7 +3649,7 @@
          reader.readAsDataURL(file);
        }
      });
-     
+
      document.getElementById('storyVideoFile').addEventListener('change', function(e) {
        const file = e.target.files[0];
        if (file) {
@@ -3522,20 +3662,20 @@
          reader.readAsDataURL(file);
        }
      });
-     
+
      // Form submission
      document.getElementById('storyForm').addEventListener('submit', function(e) {
        e.preventDefault();
-       
+
        const title = document.getElementById('storyTitle').value.trim();
        const content = document.getElementById('storyContent').value.trim();
        const imageUrl = document.getElementById('storyImage').value.trim();
        const videoUrl = document.getElementById('storyVideo').value.trim();
-       
+
        // Use uploaded file data if available, otherwise use URL
        const finalImageUrl = uploadedImageData || imageUrl || null;
        const finalVideoUrl = uploadedVideoData || videoUrl || null;
-       
+
        // Allow submission if at least one field is filled (title, content, image, or video)
        if (title || content || finalImageUrl || finalVideoUrl) {
          addStory(title || '', content || '', finalImageUrl, finalVideoUrl);
@@ -3550,24 +3690,24 @@
          showNotification('Please fill in at least one field! 📝');
        }
      });
-    
+
     // Preview functionality
     document.getElementById('storyContent').addEventListener('input', function() {
       updatePreview();
     });
-    
+
     document.getElementById('storyVideo').addEventListener('input', function() {
       updatePreview();
     });
-    
+
     function updatePreview() {
       const content = document.getElementById('storyContent').value;
       const videoUrl = document.getElementById('storyVideo').value;
       const preview = document.getElementById('storyPreview');
       const previewContent = document.getElementById('storyPreviewContent');
-      
+
       let previewText = content;
-      
+
       if (videoUrl.trim()) {
         const videoInfo = detectVideoPlatform(videoUrl);
         if (videoInfo) {
@@ -3579,7 +3719,7 @@
           previewText += '\n\n[Direct Video URL]';
         }
       }
-      
+
       if (previewText.trim()) {
         previewContent.textContent = previewText;
         preview.style.display = 'block';
@@ -3587,38 +3727,77 @@
         preview.style.display = 'none';
       }
     }
-    
+
     // Close modal when clicking outside
     document.getElementById('storyModal').addEventListener('click', function(e) {
       if (e.target === this) {
         closeStoryModal();
       }
     });
-    
-    // Scroll stories function
-    function scrollStories() {
+
+    // Scroll stories function (both directions)
+    function scrollStories(direction = 'right') {
       const container = document.getElementById('storiesContainer');
+      const distance = Math.round(container.clientWidth * 0.8);
       container.scrollBy({
-        left: 300,
+        left: direction === 'left' ? -distance : distance,
         behavior: 'smooth'
       });
+      // update nav visibility after the smooth scroll finishes
+      setTimeout(updateStoryNav, 350);
     }
-    
+
+    // Show/hide left/right nav buttons based on scroll position
+    function updateStoryNav() {
+      const container = document.getElementById('storiesContainer');
+      const leftBtn = document.getElementById('storyNavLeft');
+      const rightBtn = document.getElementById('storyNavRight');
+      if (!container || !leftBtn || !rightBtn) return;
+      const maxScrollLeft = container.scrollWidth - container.clientWidth;
+      leftBtn.style.display = container.scrollLeft > 4 ? 'flex' : 'none';
+      rightBtn.style.display = 'flex'; // always visible
+    }
+
          // Initialize stories on page load
      document.addEventListener('DOMContentLoaded', function() {
        loadStories();
+      // Setup stories swipe and nav visibility
+      const sc = document.getElementById('storiesContainer');
+      if (sc) {
+        sc.addEventListener('scroll', updateStoryNav, { passive: true });
+        window.addEventListener('resize', updateStoryNav);
+        updateStoryNav();
+
+        // Touch swipe
+        let touchStartX = 0;
+        sc.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+        sc.addEventListener('touchend', (e) => {
+          const deltaX = e.changedTouches[0].clientX - touchStartX;
+          if (Math.abs(deltaX) > 30) scrollStories(deltaX > 0 ? 'left' : 'right');
+        });
+
+        // Mouse drag swipe
+        let mouseDown = false, mouseStartX = 0;
+        sc.addEventListener('mousedown', (e) => { mouseDown = true; mouseStartX = e.clientX; });
+        sc.addEventListener('mouseup', (e) => {
+          if (!mouseDown) return; mouseDown = false;
+          const deltaX = e.clientX - mouseStartX;
+          if (Math.abs(deltaX) > 30) scrollStories(deltaX > 0 ? 'left' : 'right');
+        });
+      }
+
       // Start feed realtime listener
       try { bindFeedRealtime(); } catch (e) { console.error('bindFeedRealtime error', e); }
       // Show/hide composer based on admin
       updateComposerForAdmin();
-       
+
        // Load TikTok embed script
        if (!document.querySelector('script[src*="tiktok"]')) {
          const tiktokScript = document.createElement('script');
          tiktokScript.src = 'https://www.tiktok.com/embed.js';
          document.head.appendChild(tiktokScript);
        }
-       
+
                // Check if admin session exists (optional - for convenience)
         const adminSession = sessionStorage.getItem('lemoAdminSession');
         if (adminSession === 'true') {
